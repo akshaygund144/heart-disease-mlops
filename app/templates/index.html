@@ -2,9 +2,11 @@
 <html>
 <head>
     <title>Heart Disease Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
+<div class="container">
 
 <h1>Heart Disease Prediction</h1>
 
@@ -95,15 +97,17 @@ Thal
 
 <br><br>
 
-<input type="submit" value="Predict">
+<button type="submit">Predict</button>
 
 </form>
 
 {% if prediction is defined %}
-
-<h2>{{ prediction }}</h2>
-
+<div class="result">
+    {{ prediction }}
+</div>
 {% endif %}
+
+</div>
 
 </body>
 
