@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Heart Disease Prediction</title>
+</head>
+
+<body>
+
+<h1>Heart Disease Prediction</h1>
+
+<form action="/predict" method="POST">
+
+<h3>Patient Information</h3>
+
+Age:
+<input type="number" name="age" required><br><br>
+
+Sex:
+<select name="sex">
+    <option value="0">Female</option>
+    <option value="1">Male</option>
+</select>
+
+<br><br>
+
+Resting Blood Pressure:
+<input type="number" name="trestbps" required><br><br>
+
+Cholesterol:
+<input type="number" name="chol" required><br><br>
+
+Fasting Blood Sugar >120:
+<select name="fbs">
+    <option value="0">No</option>
+    <option value="1">Yes</option>
+</select>
+
+<br><br>
+
+Maximum Heart Rate:
+<input type="number" name="thalach" required><br><br>
+
+Exercise Induced Angina:
+<select name="exang">
+    <option value="0">No</option>
+    <option value="1">Yes</option>
+</select>
+
+<br><br>
+
+Oldpeak:
+<input type="number" step="0.1" name="oldpeak" required><br><br>
+
+Number of Major Vessels:
+<input type="number" name="ca" min="0" max="4" required><br><br>
+
+Chest Pain Type:
+
+<select name="cp">
+    <option value="1">Type 1</option>
+    <option value="2">Type 2</option>
+    <option value="3">Type 3</option>
+    <option value="4">Type 4</option>
+</select>
+
+<br><br>
+
+Rest ECG
+
+<select name="restecg">
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+</select>
+
+<br><br>
+
+Slope
+
+<select name="slope">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+</select>
+
+<br><br>
+
+Thal
+
+<select name="thal">
+    <option value="3">3</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+</select>
+
+<br><br>
+
+<input type="submit" value="Predict">
+
+</form>
+
+{% if prediction is defined %}
+
+<h2>{{ prediction }}</h2>
+
+{% endif %}
+
+</body>
+
+</html>
