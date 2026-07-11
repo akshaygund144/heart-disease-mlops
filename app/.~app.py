@@ -3,30 +3,18 @@ import pandas as pd
 import joblib
 import os
 
-# -------------------------------------------------------
-# Initialize Flask App
-# -------------------------------------------------------
-
 app = Flask(__name__)
 
-# -------------------------------------------------------
-# Project Paths
-# -------------------------------------------------------
-
+# Get project root directory
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Artifacts folder
 ARTIFACTS_DIR = os.path.join(BASE_DIR, "artifacts")
 
-# -------------------------------------------------------
-# Load Model Artifacts
-# -------------------------------------------------------
-
+# Load artifacts
 model = joblib.load(os.path.join(ARTIFACTS_DIR, "best_model.pkl"))
 scaler = joblib.load(os.path.join(ARTIFACTS_DIR, "scaler.pkl"))
 feature_names = joblib.load(os.path.join(ARTIFACTS_DIR, "feature_names.pkl"))
-
-# -------------------------------------------------------
-# Home Page
-# -------------------------------------------------------
 
 
 @app.route("/")
@@ -34,15 +22,10 @@ def home():
     return render_template("index.html")
 
 
-# -------------------------------------------------------
-# Prediction Route
-# -------------------------------------------------------
-
-
 @app.route("/predict", methods=["POST"])
 def predict():
 
-    # Read numerical inputs
+    # Read form inputs
     age = float(request.form["age"])
     sex = int(request.form["sex"])
     trestbps = float(request.form["trestbps"])
@@ -53,19 +36,15 @@ def predict():
     oldpeak = float(request.form["oldpeak"])
     ca = float(request.form["ca"])
 
-    # Read categorical inputs
     cp = int(request.form["cp"])
     restecg = int(request.form["restecg"])
     slope = int(request.form["slope"])
     thal = int(request.form["thal"])
 
-    # ---------------------------------------------------
-    # Create input dataframe
-    # ---------------------------------------------------
-
+    # Create dataframe with zeros
     data = pd.DataFrame(0, index=[0], columns=feature_names)
 
-    # Numerical features
+    # Fill numerical features
     data["age"] = age
     data["sex"] = sex
     data["trestbps"] = trestbps
@@ -76,10 +55,7 @@ def predict():
     data["oldpeak"] = oldpeak
     data["ca"] = ca
 
-    # ---------------------------------------------------
-    # One-Hot Encoding
-    # ---------------------------------------------------
-
+    # One-hot encoding
     if cp == 2:
         data["cp_2.0"] = 1
     elif cp == 3:
@@ -102,33 +78,20 @@ def predict():
     elif thal == 7:
         data["thal_7.0"] = 1
 
-    # ---------------------------------------------------
-    # Scale Features
-    # ---------------------------------------------------
-
+    # Scale data
     scaled = scaler.transform(data)
 
-    # Convert back to DataFrame to preserve feature names
-    scaled = pd.DataFrame(scaled, columns=feature_names)
-
-    # ---------------------------------------------------
-    # Prediction
-    # ---------------------------------------------------
-
+    # Predict
     prediction = model.predict(scaled)[0]
     probability = model.predict_proba(scaled)[0][1]
 
     if prediction == 1:
         result = f"Heart Disease Detected (Probability: {probability:.2%})"
     else:
-        result = f"No Heart Disease Detected (Probability: {(1 - probability):.2%})"
+        result = f"No Heart Disease Detected (Probability: {(1-probability):.2%})"
 
     return render_template("index.html", prediction=result)
 
-
-# -------------------------------------------------------
-# Run Flask App
-# -------------------------------------------------------
 
 if __name__ == "__main__":
     app.run(debug=True)
