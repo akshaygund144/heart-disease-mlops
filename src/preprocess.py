@@ -50,8 +50,19 @@ def preprocess_data(df):
     X_train_scaled = scaler.fit_transform(X_train)
     X_test_scaled = scaler.transform(X_test)
 
-    # Create artifacts folder if it doesn't exist
     os.makedirs(ARTIFACTS_DIR, exist_ok=True)
+
+    # Save scaler
+    joblib.dump(
+    scaler,
+    os.path.join(ARTIFACTS_DIR, "scaler.pkl")
+)
+
+# Save feature names
+    joblib.dump(
+    list(X_train.columns),
+    os.path.join(ARTIFACTS_DIR, "feature_names.pkl")
+)
 
     # Save scaler
     scaler_path = os.path.join(ARTIFACTS_DIR, "scaler.pkl")

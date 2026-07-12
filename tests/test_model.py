@@ -86,3 +86,4 @@ def test_model_prediction():
     # -------------------------------------------------------
     assert prediction in [0, 1]
     assert 0.0 <= probability <= 1.0
+
