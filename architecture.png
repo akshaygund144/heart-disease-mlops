@@ -1,0 +1,32 @@
+## 🔄 System Workflow
+
+```text
+Dataset
+   │
+   ▼
+Preprocessing
+   │
+   ▼
+Feature Engineering
+   │
+   ▼
+Model Training
+   │
+   ▼
+MLflow
+   │
+   ▼
+Saved Model
+   │
+   ▼
+FastAPI
+   │
+   ▼
+Docker
+   │
+   ▼
+Kubernetes
+   │
+   ▼
+Monitoring
+```

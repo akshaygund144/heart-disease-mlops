@@ -1,92 +1,287 @@
 # ❤️ Heart Disease Prediction using Machine Learning & MLOps
 
-## 📌 Project Overview
-
-This project predicts whether a patient is likely to have heart disease using Machine Learning.
-
-The application follows an end-to-end MLOps workflow, including:
-
-- Data Acquisition
-- Exploratory Data Analysis (EDA)
-- Data Preprocessing
-- Feature Engineering
-- Model Training
-- Model Evaluation
-- Hyperparameter Tuning
-- Model Deployment using Flask
+![Python](https://img.shields.io/badge/Python-3.12-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-API-green)
+![Docker](https://img.shields.io/badge/Docker-Container-blue)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-Orchestration-326CE5)
+![MLflow](https://img.shields.io/badge/MLflow-Experiment%20Tracking-orange)
+![GitHub Actions](https://img.shields.io/badge/CI-GitHub%20Actions-success)
 
 ---
 
-## 📂 Project Structure
+# 📌 Project Overview
+
+This project implements an end-to-end Machine Learning Operations (MLOps) pipeline for predicting the likelihood of heart disease using the UCI Cleveland Heart Disease dataset.
+
+The objective is not only to build an accurate predictive model but also to demonstrate industry-standard MLOps practices such as experiment tracking, automated testing, containerization, Kubernetes deployment, monitoring, and CI/CD.
+
+---
+
+# 🎯 Objectives
+
+- Predict heart disease using Machine Learning
+- Compare multiple machine learning algorithms
+- Track experiments using MLflow
+- Deploy the model using FastAPI
+- Containerize the application using Docker
+- Deploy the application on Kubernetes
+- Monitor the API using Prometheus metrics
+- Automate testing using GitHub Actions
+
+---
+
+# 📂 Project Structure
 
 ```
 heart-disease-mlops/
 │
-├── app/
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+│
+├── api/
+│   ├── __init__.py
+│   └── main.py
+│
 ├── artifacts/
+│   ├── best_model.pkl
+│   ├── scaler.pkl
+│   └── feature_names.pkl
+│
 ├── data/
+│   ├── raw/
+│   └── processed/
+│
+├── k8s/
+│   ├── deployment.yaml
+│   └── service.yaml
+│
 ├── notebooks/
+│
 ├── src/
+│   ├── download_data.py
+│   ├── preprocess.py
+│   ├── train.py
+│   ├── evaluate.py
+│   └── predict.py
+│
 ├── tests/
-├── README.md
+│   ├── test_model.py
+│   └── test_preprocessing.py
+│
+├── Dockerfile
 ├── requirements.txt
-└── .gitignore
+├── README.md
+└── mlflow.db
 ```
 
 ---
 
-## 📊 Dataset
+# 📊 Dataset
 
-UCI Cleveland Heart Disease Dataset
+**Dataset:** UCI Cleveland Heart Disease Dataset
 
-Target:
+Target Variable
 
-- 0 → No Heart Disease
-- 1 → Heart Disease
+- **0** → No Heart Disease
+- **1** → Heart Disease
+
+Dataset contains clinical attributes such as:
+
+- Age
+- Sex
+- Chest Pain Type
+- Cholesterol
+- Blood Pressure
+- ECG Results
+- Maximum Heart Rate
+- Exercise-induced Angina
+- ST Depression
+- Number of Major Vessels
+- Thalassemia
 
 ---
 
-## 🧠 Machine Learning Models
+# 📈 Exploratory Data Analysis
+
+Performed:
+
+- Missing value analysis
+- Feature distributions
+- Correlation heatmap
+- Target class balance
+- Chest pain vs target analysis
+- Numerical feature visualization
+
+---
+
+# ⚙️ Data Preprocessing
+
+- Missing value handling
+- One-hot encoding
+- Feature scaling using StandardScaler
+- Train-Test Split
+- Feature engineering
+- Saved preprocessing artifacts using Joblib
+
+---
+
+# 🤖 Machine Learning Models
+
+Models implemented:
 
 - Logistic Regression
-- Decision Tree
-- Random Forest
+- Random Forest Classifier
 
-Hyperparameter tuning was performed using GridSearchCV.
+Hyperparameter tuning performed using **GridSearchCV**.
+
+Best model selected based on ROC-AUC score.
 
 ---
 
-## 📈 Evaluation Metrics
+# 📊 Model Evaluation
+
+Evaluation Metrics:
 
 - Accuracy
 - Precision
 - Recall
 - F1 Score
 - ROC-AUC
-- Confusion Matrix
 - Cross Validation
+- Confusion Matrix
 
 ---
 
-## 🛠 Technologies Used
+# 📦 Model Packaging
 
-- Python
-- Pandas
-- NumPy
-- Scikit-learn
-- Flask
-- Matplotlib
-- Joblib
-- Git & GitHub
+Saved artifacts:
+
+- best_model.pkl
+- scaler.pkl
+- feature_names.pkl
 
 ---
 
-## 🚀 How to Run
+# 📈 MLflow Experiment Tracking
 
-Clone the repository
+MLflow was used to:
+
+- Track model parameters
+- Track evaluation metrics
+- Compare experiments
+- Store trained models
+- Log artifacts
+
+---
+
+# 🚀 FastAPI REST API
+
+Endpoints
+
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| GET | / | Health Check |
+| POST | /predict | Heart Disease Prediction |
+| GET | /metrics | Prometheus Metrics |
+
+Swagger Documentation
+
+```
+http://localhost:8000/docs
+```
+
+---
+
+# 🐳 Docker
+
+Build Image
 
 ```bash
-git clone <repository-url>
+docker build -t heart-disease-api .
+```
+
+Run Container
+
+```bash
+docker run -p 8000:8000 heart-disease-api
+```
+
+---
+
+# ☸ Kubernetes
+
+Deploy
+
+```bash
+kubectl apply -f k8s/
+```
+
+Check Pods
+
+```bash
+kubectl get pods
+```
+
+Check Services
+
+```bash
+kubectl get services
+```
+
+---
+
+# 📊 Monitoring
+
+Monitoring implemented using Prometheus.
+
+Available metrics:
+
+- prediction_requests_total
+- prediction_latency_seconds
+
+Metrics Endpoint
+
+```
+http://localhost:8000/metrics
+```
+
+---
+
+# 🔄 CI/CD
+
+GitHub Actions pipeline performs:
+
+- Install dependencies
+- Execute Pytest
+- Validate code before merge
+
+---
+
+# 🧪 Unit Testing
+
+Tests written using Pytest.
+
+Run tests:
+
+```bash
+pytest -v
+```
+
+---
+
+# 💻 Installation
+
+Clone repository
+
+```bash
+git clone https://github.com/akshaygund144/heart-disease-mlops.git
+```
+
+Navigate
+
+```bash
+cd heart-disease-mlops
 ```
 
 Install dependencies
@@ -95,18 +290,60 @@ Install dependencies
 pip install -r requirements.txt
 ```
 
-Run the application
+Run API
 
 ```bash
-python app/app.py
+uvicorn api.main:app --reload
 ```
-
-Open:
-
-http://127.0.0.1:5000
 
 ---
 
-## 👨‍💻 Author
+# 📸 Project Screenshots
 
-Akshay Gund
+Include screenshots of:
+
+- EDA
+- MLflow
+- FastAPI Swagger
+- Docker
+- Kubernetes Pods
+- GitHub Actions
+- Prometheus Metrics
+
+---
+
+# 🔮 Future Improvements
+
+- Model Registry
+- Continuous Deployment
+- Grafana Dashboard
+- Cloud Deployment (AWS/Azure/GCP)
+- Authentication & Authorization
+- Automated Retraining Pipeline
+
+---
+
+# 👨‍💻 Author
+
+**Akshay Gund**
+
+M.Tech Artificial Intelligence & Machine Learning
+
+BITS Pilani (WILP)
+
+---
+
+# ⭐ Acknowledgements
+
+- UCI Machine Learning Repository
+- Scikit-learn
+- FastAPI
+- MLflow
+- Docker
+- Kubernetes
+- Prometheus
+
+
+## 🔄 System Workflow
+
+![System Workflow](architecture.png)
