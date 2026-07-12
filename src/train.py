@@ -38,15 +38,6 @@ df = load_data(DATA_PATH)
     scaler
 ) = preprocess_data(df)
 
-print("=" * 60)
-print("Training Data Shape:", X_train.shape)
-print("Training Columns:")
-print(X_train.columns.tolist())
-
-print("\nScaler expects:")
-print(list(scaler.feature_names_in_))
-print("=" * 60)
-
 print("Training features:", X_train.shape[1])
 print(X_train.columns.tolist())
 
