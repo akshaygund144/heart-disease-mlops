@@ -35,6 +35,7 @@ jobs:
       - name: Train Model
         run: |
           python src/train.py
+          ls -la artifacts
 
       - name: Run Tests
         run: |
